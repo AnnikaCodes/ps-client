@@ -358,13 +358,13 @@ class PSConnection():
         Arguments:
             challstr {string} -- the challstr to use to log in
         """
-        self.log("I: PSConnection.login(): logging in...")
+        log("I: PSConnection.login(): logging in...")
         loginInfo = {'act': 'login', 'name': self.this.name, 'pass': self.password, 'challstr': challstr}
         loginResponse = requests.post('http://play.pokemonshowdown.com/action.php', data=loginInfo).content
         assertion = json.loads(loginResponse[1:].decode('utf-8'))['assertion']
         self.send(f"|/trn {self.this.name},0,{assertion}")
         self.isLoggedIn = True
-        return self.log("I: PSConnection.login(): logged in successfully")
+        return log("I: PSConnection.login(): logged in successfully")
 
     def send(self, message):
         """Sends a message
@@ -391,7 +391,7 @@ class PSConnection():
         objects = [room for room in self.roomList if room.id == roomid]
         if len(objects) == 0: return None
         if len(objects) > 1:
-            self.log(f"W: PSConnection.getRoom(): more than 1 Room object for room {roomid}")
+            log(f"W: PSConnection.getRoom(): more than 1 Room object for room {roomid}")
         return objects[0]
 
     def getUser(self, userid):
@@ -475,17 +475,17 @@ class PSConnection():
         Arguments:
             error {string? probably} -- the error
         """
-        self.log(f"E: PSConnection.onError(): websocket error: {error}")
+        log(f"E: PSConnection.onError(): websocket error: {error}")
 
     def onClose(self):
         """Logs when the connection closes
         """
-        self.log("I: PSConnection.onClose(): websocket closed")
+        log("I: PSConnection.onClose(): websocket closed")
 
     def onOpen(self):
         """Logs when the websocket is opened
         """
-        self.log("I: PSConnection.onOpen(): websocket successfully opened")
+        log("I: PSConnection.onOpen(): websocket successfully opened")
         if self.onOpenThread:
             thread = threading.Thread(target=self.onOpenThread, args=tuple([self]))
             thread.start()
