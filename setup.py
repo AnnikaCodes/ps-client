@@ -25,7 +25,7 @@ setuptools.setup(
     install_requires=[
         "pytz",
         "requests",
-        "websocket"
+        "websocket_client"
     ],
     python_requires='>=3.6',
 )
