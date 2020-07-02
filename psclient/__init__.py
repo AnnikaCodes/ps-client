@@ -133,7 +133,7 @@ class User():
             [bool] -- True if the user can do the action and False otherwise
         """
         if not room: return False
-        if action not in ['wall', 'html']: self.connection.log(f"E: User.can(): {action} isn't a valid action")
+        if action not in ['wall', 'html']: log(f"E: User.can(): {action} isn't a valid action")
         return (
             (action == 'wall' and self.id in room.usersWithRankGEQ('%')) or
             (action == 'html' and self.id in room.usersWithRankGEQ('*'))
@@ -186,7 +186,7 @@ class Message():
         elif self.type == 'pm': self._handlePM(split)
         elif self.type == 'queryresponse': self._handleQuery(split)
         elif self.type == 'init': pass
-        else: self.connection.log(f"DEBUG: Message() of unknown type {self.type}: {self.raw}")
+        else: log(f"DEBUG: Message() of unknown type {self.type}: {self.raw}")
 
     def respondHTML(self, html):
         """Responds to the message with a HTML box, in a room or in PMs
