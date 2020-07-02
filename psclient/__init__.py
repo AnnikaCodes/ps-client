@@ -203,10 +203,10 @@ class Message():
             return self.room.say(f"/adduhtml {self.connection.this.userid},{html}")
         if self.sender and not self.room:
             possibleRoomIDs = [r for r in self.connection.getUserRooms(self.sender) \
-                if r in self.connection.getUserRooms(self.connection.bot)]
+                if r in self.connection.getUserRooms(self.connection.this)]
             for possibleRoom in possibleRoomIDs:
                 possibleRoom = self.connection.getRoom(possibleRoom)
-                if possibleRoom and self.connection.bot.can("html", possibleRoom):
+                if possibleRoom and self.connection.this.can("html", possibleRoom):
                     return possibleRoom.say(f"/pminfobox {self.sender.id}," + html.replace('\n', ''))
 
     def _handleChat(self, split):

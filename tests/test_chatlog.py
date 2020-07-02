@@ -5,6 +5,7 @@
 from datetime import datetime
 import sys
 import pathlib
+import dummies
 sys.path.append(str(pathlib.Path(__file__).joinpath("../..").resolve()) + '/')
 
 from psclient import chatlog # pylint: disable=wrong-import-position
@@ -24,7 +25,20 @@ class TestChatlog:
     def testFormatData(self):
         """Tests formatting data
         """
-        sampleData = "annika|1591322849|chat|#Annika|hi!"
-        assert chatlog.formatData(sampleData, isHTML=False) == "[02:07:29] #Annika: hi!"
-        assert chatlog.formatData(sampleData, isHTML=True) == "<small>[02:07:29] </small><small>#</small><b>Annika</b>: hi!"
+        sampleData = "annika|1591322849|chat|#Annika|hi!\n"
+        assert self.chatlogger.formatData(sampleData, isHTML=False) == "[02:07:29] #Annika: hi!"
+        assert self.chatlogger.formatData(sampleData, isHTML=True) == \
+            "<small>[02:07:29] </small><small>#</small><b>Annika</b>: hi!"
+
+    def testFormatMessage(self):
+        """Tests formatting a message
+        """
+        sampleMessage = dummies.DummyMessage(
+            sender=dummies.DummyUser(userid='annika'),
+            time=1591322849,
+            messageType='chat',
+            senderName="#Annika",
+            body="hi!"
+        )
+        assert self.chatlogger.formatMessage(sampleMessage) == "annika|1591348049|chat|#Annika|hi!\n"
     # todo: figure out a way to test the rest of chatlog
