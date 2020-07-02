@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ps-client",
-    version="0.0.1",
+    version="0.0.2",
     author="Annika",
     author_email="annika0uwu@gmail.com",
     description="A package for interactions with the Pokémon Showdown simulator.",
@@ -21,6 +21,11 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
+    ],
+    install_requires=[
+        "pytz",
+        "requests",
+        "websocket"
     ],
     python_requires='>=3.6',
 )
