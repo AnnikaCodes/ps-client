@@ -10,6 +10,8 @@ import sys
 import requests
 import websocket
 
+from psclient import chatlog
+
 ranksInOrder = list("+%☆@★*#&~")
 LOGLEVEL = 1
 
@@ -81,6 +83,7 @@ class Room():
         """Joins the room
         """
         self.connection.send(f'|/j {self.id}')
+        self.connection.roomList.add(self)
         self.say(f'/cmd roominfo {self.id}')
 
     def usersWithRankGEQ(self, rank):
@@ -499,7 +502,7 @@ class PSConnection():
         if self.chatlogger: self.chatlogger.handleMessage(message)
         if message.challstr:
             self.login(message.challstr)
-        if self.onParsedMessage: self.onParsedMessage(message)
+        if self.onParsedMessage: self.onParsedMessage(self, message)
 
     def __str__(self):
         """String representation of the PSConnection

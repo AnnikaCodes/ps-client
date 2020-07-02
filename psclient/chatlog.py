@@ -30,7 +30,7 @@ class Chatlogger:
         """
         room = message.room.id if message.room else 'global'
         logFile = self.getFile(room, 'a')
-        logFile.write(formatMessage(message))
+        logFile.write(self.formatMessage(message))
 
     def getFile(self, roomID, perms):
         """Returns a file object corresponding to the room's chatlog file.
@@ -82,74 +82,73 @@ class Chatlogger:
                     pass
         return results
 
+    def formatMessage(self, message):
+        """Formats a message for logging.
+        Format: userid|time|type|senderName|body
+        Args:
+            message (Message): the message to format
+
+        Returns:
+            (string): the formatted message
+        """
+        if message.time:
+            time = datetime.utcfromtimestamp(int(message.time)).astimezone(pytz.utc).timestamp()
+        else:
+            time = datetime.timestamp(datetime.utcnow())
+
+        return "|".join([
+            str(message.sender.id) if message.sender else '',
+            str(int(time)),
+            str(message.type) if message.type else '',
+            str(message.senderName) if message.senderName else '',
+            f"{str(message.body) if message.body else ''}\n"
+        ])
+
+    def formatData(self, data, isHTML=False):
+        """Formats data to text
+
+        Args:
+            data (string of form userid|time|type|senderName|body): the data
+            isHTML (bool, optional): Whether to format as HTML. Defaults to False.
+
+        Returns:
+            string: a human-readable version of the message
+        """
+        splitData = data.split("|", 4)
+        if len(splitData) == 5:
+            userID, time, msgType, senderName, body = splitData
+        elif len(splitData) == 3:
+            userID, msgType, body = splitData
+            time = ""
+            senderName = userID
+        else:
+            psclient.log(f"DEBUG: unexpected number of data items (expected 5 or 3, got {str(len(splitData))}; data: f{data})")
+            return "Unparseable message (bad format)"
+            # TODO: figure out what to do about |html|, |raw|, etc
+
+        try:
+            time = f"[{str(datetime.utcfromtimestamp(int(time)).time())}] "
+            if isHTML: time = f"<small>{html.escape(time)}</small>"
+        except ValueError:
+            time = ""
+        body = body.strip().strip('\n')
+        sender = senderName.strip()
+        if isHTML:
+            body = html.escape(body)
+            sender = html.escape(sender)
+
+        isAdmin = sender[:5] == '&amp;' if sender else False
+        htmlRankSet = set(psclient.ranksInOrder)
+        htmlRankSet.discard('&') # '&' rank is already handled with isAdmin
+        if sender and (isAdmin or sender[0] in htmlRankSet.union(set('+%@*#~'))):
+            rank = sender[:5] if isAdmin else sender[0]
+            sender = f"<small>{rank}</small><b>{sender[len(rank):]}</b>" if isHTML else rank + sender[len(rank):]
+        else:
+            sender = f"<b>{sender}</b>"
+        if msgType in ['chat', 'pm']: return f"{time}{sender}: {body}"
+        if msgType == 'join': return f"{time}{sender} joined"
+        if msgType == 'leave': return f"{time}{sender} left"
+        return "Unparseable message"
 
     def __str__(self):
         return f"Chatlogger logging to path {str(self.path.resolve())}/"
-
-def formatMessage(message):
-    """Formats a message for logging.
-    Format: userid|time|type|senderName|body
-    Args:
-        message (Message): the message to format
-
-    Returns:
-        (string): the formatted message
-    """
-    if message.time:
-        time = datetime.utcfromtimestamp(int(message.time)).astimezone(pytz.utc).timestamp()
-    else:
-        time = datetime.timestamp(datetime.utcnow())
-
-    return "|".join([
-        str(message.sender.id) if message.sender else '',
-        str(int(time)),
-        str(message.type) if message.type else '',
-        str(message.senderName) if message.senderName else '',
-        f"{str(message.body) if message.body else ''}\n"
-    ])
-
-def formatData(data, isHTML=False):
-    """Formats data to text
-
-    Args:
-        data (string of form userid|time|type|senderName|body): the data
-        isHTML (bool, optional): Whether to format as HTML. Defaults to False.
-
-    Returns:
-        string: a human-readable version of the message
-    """
-    splitData = data.split("|", 4)
-    if len(splitData) == 5:
-        userID, time, msgType, senderName, body = splitData
-    elif len(splitData) == 3:
-        userID, msgType, body = splitData
-        time = ""
-        senderName = userID
-    else:
-        psclient.log(f"DEBUG: unexpected number of data items (expected 5 or 3, got {str(len(splitData))}; data: f{data})")
-        return "Unparseable message (bad format)"
-        # TODO: figure out what to do about |html|, |raw|, etc
-
-    try:
-        time = f"[{str(datetime.utcfromtimestamp(int(time)).time())}] "
-        if isHTML: time = f"<small>{html.escape(time)}</small>"
-    except ValueError:
-        time = ""
-    body = body.strip().strip('\n')
-    sender = senderName.strip()
-    if isHTML:
-        body = html.escape(body)
-        sender = html.escape(sender)
-
-    isAdmin = sender[:5] == '&amp;' if sender else False
-    htmlRankSet = set(psclient.ranksInOrder)
-    htmlRankSet.discard('&') # '&' rank is already handled with isAdmin
-    if sender and (isAdmin or sender[0] in htmlRankSet.union(set('+%@*#~'))):
-        rank = sender[:5] if isAdmin else sender[0]
-        sender = f"<small>{rank}</small><b>{sender[len(rank):]}</b>" if isHTML else rank + sender[len(rank):]
-    else:
-        sender = f"<b>{sender}</b>"
-    if msgType in ['chat', 'pm']: return f"{time}{sender}: {body}"
-    if msgType == 'join': return f"{time}{sender} joined"
-    if msgType == 'leave': return f"{time}{sender} left"
-    return "Unparseable message"
