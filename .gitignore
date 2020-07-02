@@ -9,3 +9,8 @@
 # Logs, etc.
 logs/*
 tests/logs
+
+# Build
+build/
+dist/
+*.egg-info/
