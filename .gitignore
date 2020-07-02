@@ -1,0 +1,11 @@
+# Configuration
+.vscode/
+
+# Caching
+**/__pycache__
+*.pyc
+.pytest_cache
+
+# Logs, etc.
+logs/*
+tests/logs
