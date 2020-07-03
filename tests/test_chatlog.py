@@ -3,6 +3,7 @@
     by Annika"""
 
 from datetime import datetime
+import re
 import sys
 import pathlib
 import dummies
@@ -40,5 +41,5 @@ class TestChatlog:
             senderName="#Annika",
             body="hi!"
         )
-        assert self.chatlogger.formatMessage(sampleMessage) == "annika|1591348049|chat|#Annika|hi!\n"
+        assert re.match(r"annika\|15913[0-9]{3}49\|chat\|#Annika\|hi!\n", self.chatlogger.formatMessage(sampleMessage))
     # todo: figure out a way to test the rest of chatlog
