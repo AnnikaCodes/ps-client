@@ -43,13 +43,13 @@ class Room():
     """Represents a room on Pokemon Showdown
 
         Arguments:
-            name (string): the name of the room that the Room object represents (can include spaces/caps)
-            connection (PSConnection): the PSConnection object to use to connect to the room
+            name (string): the name of the room that the :any:`Room` object represents (can include spaces/caps)
+            connection (PSConnection): the :any:`PSConnection` object to use to connect to the room
 
         Attributes:
-            connection (PSConnection): the PSConnection object to use to connect to the room
+            connection (PSConnection): the :any:`PSConnection` object to use to connect to the room
             id (string that is an ID): the room's ID
-            auth {dictionary}: a dictionary containing the room's auth
+            auth (dictionary): a dictionary containing the room's auth
     """
     def __init__(self, name, connection):
         """Creates a new Room object"""
@@ -62,7 +62,7 @@ class Room():
         """Updates the auth list for the room based on the given auth dictionary
 
         Arguments:
-            authDict {dictionary}: dictionary of the changes to the auth list
+            authDict (dictionary): dictionary of the changes to the auth list
         """
         for key in authDict.keys():
             if key in self.auth:
@@ -108,7 +108,7 @@ class Room():
 
 
     def __str__(self):
-        """String representation of the Room
+        """String representation of the :any:`Room`
 
         Returns:
             string: representation
@@ -117,6 +117,7 @@ class Room():
 
 class User():
     """Represents a user on Pokemon Showdown
+
         Arguments:
             name (string): the username
             connection (PSConnection): the connection to access PS with
@@ -127,9 +128,6 @@ class User():
             id (string that is an ID): the user's ID
     """
     def __init__(self, name, connection):
-        """User()
-
-        """
         self.name = name
         self.connection = connection
         self.id = toID(name)
@@ -143,7 +141,7 @@ class User():
             room (Room): the room where the action is taking place
 
         Returns:
-            bool: True if the user can do the action and False otherwise
+            bool: :any:`True` if the user can do the action and :any:`False` otherwise
         """
         if not room: return False
         if action not in ['wall', 'html']: log(f"E: User.can(): {action} isn't a valid action")
@@ -162,7 +160,7 @@ class User():
         self.connection.whisper(self.id, message)
 
     def __str__(self):
-        """String representation of the User
+        """String representation of the :any:`User`
 
         Returns:
             string: representation
@@ -171,22 +169,21 @@ class User():
 
 class Message():
     """Represents a message sent on Pokemon Showdown
-    All attributes except raw may be None.
 
-        Arguments:
-            raw (string): the raw data of the message
-            connection (PSConnection): the connection the message was recieved on
+    Arguments:
+        raw (string): the raw data of the message
+        connection (PSConnection): the connection the message was recieved on
 
-        Attributes:
-            sender (User): the user who sent the message
-            room (Room): the room the message was sent in
-            body (string): the body of the message
-            time (string): the UNIX timestamp of the message
-            type (string): the type of the message ('chat', 'pm', etc)
-            challstr (string): the challstr, if the message contains one
-            senderName (string): the username of the user who sent the message
-            raw (string): the raw message
-            connection (PSConnection): the connection the message was recieved on
+    Attributes:
+        sender (User or None): the user who sent the message
+        room (Room or None): the room the message was sent in
+        body (string or None): the body of the message
+        time (string or None): the UNIX timestamp of the message
+        type (string or None): the type of the message (``chat``, ``pm``, etc)
+        challstr (string or None): the challstr, if the message contains one
+        senderName (string or None): the username of the user who sent the message
+        raw (string): the raw message
+        connection (PSConnection): the connection the message was recieved on
     """
     def __init__(self, raw, connection):
         """Creates a new Message object"""
@@ -231,7 +228,7 @@ class Message():
                     return possibleRoom.say(f"/pminfobox {self.sender.id}," + html.replace('\n', ''))
 
     def _handleChat(self, split):
-        """Handles messages of type chat
+        """Handles messages of type ``chat``
 
         Args:
             split (list): the split raw message
@@ -257,11 +254,11 @@ class Message():
         self.body = "|".join(split[currentSlice:]).strip('\n')
 
     def _handleJoinLeave(self, split, isJoin=False):
-        """Handles messages of type join and leave
+        """Handles messages of types ``join`` and ``leave``
 
         Args:
             split (list): the split raw message
-            isJoin (bool, optional): whether the message describes a join. Defaults to False.
+            isJoin (bool, optional): whether the message describes a join. Defaults to :any:`False`.
         """
         self.type = 'join' if isJoin else 'leave'
         self._setRoom(split)
@@ -315,7 +312,7 @@ class Message():
         self.room = self.connection.getRoom(roomid if roomid else 'lobby')
 
     def __str__(self):
-        """String representation of the Message
+        """String representation of the :any:`Message`
 
         Returns:
             string: representation
@@ -333,31 +330,31 @@ class Message():
 class PSConnection():
     """Represents a connection to Pokemon Showdown
 
-        Arguments:
-            username (string): the username to log in to PS! with
-            password (string): the password for the PS! username provided
-            onParsedMessage (function, optional): a function that will be called each time a message is recieved
-                the only argument passed in is the parsed Message object
-            onOpenThread (function, optional): a function that will run in its own thread once the socket is open,
-                with the PSConnection as an argument. Defaults to None.
-            url (str, optional): the URL of the websocket of the server to connect to.
-                Defaults to "ws://sim.smogon.com:8000/showdown/websocket".
-            chatlogger (object, optional): a chatlogger, whose .handleMessage() method will be called on each message.
-                Defaults to None.
-            loglevel (int, optional): the level of logging (to stdout / stderr). Defaults to 1. Higher means more verbose.
+    Arguments:
+        username (string): the username to log in to PS! with
+        password (string): the password for the PS! username provided
+        onParsedMessage (function, optional): a function that will be called each time a message is recieved
+            the only argument passed in is the parsed :any:`Message` object
+        onOpenThread (function, optional): a function that will run in its own thread once the socket is open,
+            with the :any:`PSConnection` as an argument. Defaults to :any:`None`.
+        url (str, optional): the URL of the websocket of the server to connect to.
+            Defaults to ``ws://sim.smogon.com:8000/showdown/websocket``.
+        chatlogger (object, optional): a chatlogger, whose :any:`handleMessage()` method will be called on each message.
+            Defaults to :any:`None`.
+        loglevel (int, optional): the level of logging (to stdout / stderr). Defaults to :any:`1`. Higher means more verbose.
 
-        Attributes:
-            roomList (set): a set of all the known Room objects
-            userList (dictionary): a dictionary mapping all known User objects to lists of room IDs
-            password (string): the password to use to log into PS
-            loglevel (int): the level of logging
-            lastSentTime (int): the timestamp at which the most recent message was sent
-            this (User): a User object referring to the user who's logged in
-            onParsedMessage (function): a function that will be called each time a message is recieved
-                the only argument passed in is the parsed Message object
-            onOpenThread (function): a function that will run in its own thread once the socket is open,
-                with the PSConnection as an *args argument
-            isLoggedIn (bool): True if the connection represents a logged-in user and False otherwise
+    Attributes:
+        roomList (set): a set of all the known :any:`Room` objects
+        userList (dictionary): a dictionary mapping all known :any:`User` objects to lists of room IDs
+        password (string): the password to use to log into PS
+        loglevel (int): the level of logging
+        lastSentTime (int): the timestamp at which the most recent message was sent
+        this (User): an :any:`User` object referring to the user who's logged in
+        onParsedMessage (function): a function that will be called each time a message is recieved
+            the only argument passed in is the parsed :any:`Message` object
+        onOpenThread (function): a function that will run in its own thread once the socket is open,
+            with the :any:`PSConnection` as an :any:`*args` argument
+        isLoggedIn (bool): :any:`True` if the connection represents a logged-in user and :any:`False` otherwise
     """
     def __init__(
         self,
@@ -415,13 +412,13 @@ class PSConnection():
         self.lastSentTime = time.time() * 1000.0
 
     def getRoom(self, name):
-        """Gets the Room object corresponding to an ID
+        """Gets the :any:`Room` object corresponding to an ID
 
         Arguments:
-            id {string in ID format}: the room ID (in ID format from toID())
+            id (string in ID format): the room ID (in ID format from :any:`toID()`)
 
         Returns:
-            Room: a Room object with the given ID
+            Room: a :any:`Room` object with the given ID
         """
         roomid = toID(name)
         objects = [room for room in self.roomList if room.id == roomid]
@@ -431,13 +428,13 @@ class PSConnection():
         return objects[0]
 
     def getUser(self, userid):
-        """Gets the User object for a given ID
+        """Gets the :any:`User` object for a given ID
 
         Arguments:
             userid (string that is an ID): the ID of the user to search for
 
         Returns:
-            User || None: the user, or None if the user isn't in the records
+            User or None: the user with the given ID
         """
         if userid == self.this.id: return self.this
         for user in self.userList:
@@ -449,10 +446,10 @@ class PSConnection():
         """Gets a set of the IDs (not objects) of the rooms that the user is in.
 
         Arguments:
-            user {User}: the user
+            user (User): the user
 
         Returns:
-            set: the roomids for the user's rooms, or None if the user isn't found
+            set or None:
         """
         for possibleUser in self.userList:
             if possibleUser and possibleUser.id == user.id:
@@ -463,7 +460,7 @@ class PSConnection():
         """Handles a user joining a room
 
         Arguments:
-            user {User}: the user who joined
+            user (User): the user who joined
             room (Room): the room they joined
         """
         if not isinstance(self.getUserRooms(user), set):
@@ -478,7 +475,7 @@ class PSConnection():
         """Handles a user leaving a room
 
         Arguments:
-            user {User}: the user who joined
+            user (User): the user who joined
             room (Room): the room they joined
         """
         userRooms = self.getUserRooms(user)
@@ -501,13 +498,14 @@ class PSConnection():
         """PMs a message to a user
 
         Arguments:
-            userid {string in ID format}: the user to PM
+            userid (string in ID format): the user to PM
             message (string): the message to PM
         """
         self.websocket.send(f"|/pm {userid}, {message}")
 
     def onError(self, error):
         """Handles errors on the websocket
+
         Arguments:
             error {string? probably}: the error
         """
@@ -527,7 +525,8 @@ class PSConnection():
             thread.start()
 
     def onMessage(self, rawMessage):
-        """Handles new messages from the websocket, creating a Message object
+        """Handles new messages from the websocket, creating a :any:`Message` object
+
         Arguments:
             rawMessage (string): the raw message data
         """
@@ -538,7 +537,7 @@ class PSConnection():
         if self.onParsedMessage: self.onParsedMessage(self, message)
 
     def __str__(self):
-        """String representation of the PSConnection
+        """String representation of the :any:`PSConnection`
 
         Returns:
             string: representation
@@ -552,7 +551,7 @@ class PSClient():
             connection (PSConnection): the connection to use to connect the client to PS!
 
         Attributes:
-            connection (PSConnection): the connection to use to connect the client to PS!
+            connection (PSConnection): the connection to PS!
 
     """
     def __init__(self, connection):
@@ -560,7 +559,9 @@ class PSClient():
 
     def connect(self):
         """Runs the client, logging in and connecting.
+
         Note that this function is blocking: statements after this function is called will not be executed.
-        However, your program will keep running in the form of the PSConnection.onParsedMessage and .onOpenThread attributes.
+
+        However, your program will keep running with the :any:`PSConnection.onParsedMessage` and :any:`onOpenThread` attributes.
         """
         self.connection.websocket.run_forever()

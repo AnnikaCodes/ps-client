@@ -9,6 +9,7 @@ import psclient
 
 class Chatlogger:
     """Class for logging chat
+
         Args:
             path (string): the path to the logging directory
     """
@@ -58,7 +59,7 @@ class Chatlogger:
 
         Returns:
             dictionary: a dictionary of matched messages
-            (formatted as {date (string): [userid|time|type|senderName|body] (list of day's results)})
+            (formatted as ``{date (string): [userid|time|type|senderName|body] (list of day's results)}``)
         """
         results = {}
         searchDir = self.path.joinpath(roomID)
