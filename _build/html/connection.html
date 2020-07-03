@@ -1,0 +1,420 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>PSConnection class &mdash; ps-client  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Room class" href="room.html" />
+    <link rel="prev" title="PSClient class" href="client.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ps-client
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="client.html">PSClient class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">PSConnection class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="room.html">Room class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">User class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="message.html">Message class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chatlog.html">chatlog module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ps-client</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>PSConnection class</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/connection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="psconnection-class">
+<h1>PSConnection class<a class="headerlink" href="#psconnection-class" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="psclient.PSConnection">
+<em class="property">class </em><code class="sig-prename descclassname">psclient.</code><code class="sig-name descname">PSConnection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">username</span></em>, <em class="sig-param"><span class="n">password</span></em>, <em class="sig-param"><span class="n">onParsedMessage</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">onOpenThread</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">'ws://sim.smogon.com:8000/showdown/websocket'</span></em>, <em class="sig-param"><span class="n">chatlogger</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">loglevel</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a connection to Pokemon Showdown</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> (<em>string</em>) – the username to log in to PS! with</p></li>
+<li><p><strong>password</strong> (<em>string</em>) – the password for the PS! username provided</p></li>
+<li><p><strong>onParsedMessage</strong> (<em>function</em><em>, </em><em>optional</em>) – a function that will be called each time a message is recieved
+the only argument passed in is the parsed <a class="reference internal" href="message.html#psclient.Message" title="psclient.Message"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> object</p></li>
+<li><p><strong>onOpenThread</strong> (<em>function</em><em>, </em><em>optional</em>) – a function that will run in its own thread once the socket is open,
+with the <a class="reference internal" href="#psclient.PSConnection" title="psclient.PSConnection"><code class="xref any py py-class docutils literal notranslate"><span class="pre">PSConnection</span></code></a> as an argument. Defaults to <code class="xref any docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>url</strong> (<em>str</em><em>, </em><em>optional</em>) – the URL of the websocket of the server to connect to.
+Defaults to <code class="docutils literal notranslate"><span class="pre">ws://sim.smogon.com:8000/showdown/websocket</span></code>.</p></li>
+<li><p><strong>chatlogger</strong> (<em>object</em><em>, </em><em>optional</em>) – a chatlogger, whose <a class="reference internal" href="chatlog.html#chatlog.Chatlogger.handleMessage" title="chatlog.Chatlogger.handleMessage"><code class="xref any py py-meth docutils literal notranslate"><span class="pre">handleMessage()</span></code></a> method will be called on each message.
+Defaults to <code class="xref any docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>loglevel</strong> (<em>int</em><em>, </em><em>optional</em>) – the level of logging (to stdout / stderr). Defaults to <code class="xref any docutils literal notranslate"><span class="pre">1</span></code>. Higher means more verbose.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>roomList</strong> (<em>set</em>) – a set of all the known <a class="reference internal" href="room.html#psclient.Room" title="psclient.Room"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Room</span></code></a> objects</p></li>
+<li><p><strong>userList</strong> (<em>dictionary</em>) – a dictionary mapping all known <a class="reference internal" href="user.html#psclient.User" title="psclient.User"><code class="xref any py py-class docutils literal notranslate"><span class="pre">User</span></code></a> objects to lists of room IDs</p></li>
+<li><p><strong>password</strong> (<em>string</em>) – the password to use to log into PS</p></li>
+<li><p><strong>loglevel</strong> (<em>int</em>) – the level of logging</p></li>
+<li><p><strong>lastSentTime</strong> (<em>int</em>) – the timestamp at which the most recent message was sent</p></li>
+<li><p><strong>this</strong> (<a class="reference internal" href="user.html#psclient.User" title="psclient.User"><em>User</em></a>) – an <a class="reference internal" href="user.html#psclient.User" title="psclient.User"><code class="xref any py py-class docutils literal notranslate"><span class="pre">User</span></code></a> object referring to the user who’s logged in</p></li>
+<li><p><strong>onParsedMessage</strong> (<em>function</em>) – a function that will be called each time a message is recieved
+the only argument passed in is the parsed <a class="reference internal" href="message.html#psclient.Message" title="psclient.Message"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> object</p></li>
+<li><p><strong>onOpenThread</strong> (<em>function</em>) – a function that will run in its own thread once the socket is open,
+with the <a class="reference internal" href="#psclient.PSConnection" title="psclient.PSConnection"><code class="xref any py py-class docutils literal notranslate"><span class="pre">PSConnection</span></code></a> as an <code class="xref any docutils literal notranslate"><span class="pre">*args</span></code> argument</p></li>
+<li><p><strong>isLoggedIn</strong> (<em>bool</em>) – <code class="xref any docutils literal notranslate"><span class="pre">True</span></code> if the connection represents a logged-in user and <code class="xref any docutils literal notranslate"><span class="pre">False</span></code> otherwise</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="psclient.PSConnection.getRoom">
+<code class="sig-name descname">getRoom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.getRoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the <a class="reference internal" href="room.html#psclient.Room" title="psclient.Room"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Room</span></code></a> object corresponding to an ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>string in ID format</em>) – the room ID (in ID format from <code class="xref any docutils literal notranslate"><span class="pre">toID()</span></code>)</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <a class="reference internal" href="room.html#psclient.Room" title="psclient.Room"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Room</span></code></a> object with the given ID</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="room.html#psclient.Room" title="psclient.Room">Room</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.getUser">
+<code class="sig-name descname">getUser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">userid</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.getUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the <a class="reference internal" href="user.html#psclient.User" title="psclient.User"><code class="xref any py py-class docutils literal notranslate"><span class="pre">User</span></code></a> object for a given ID</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>userid</strong> (<em>string that is an ID</em>) – the ID of the user to search for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the user with the given ID</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="user.html#psclient.User" title="psclient.User">User</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.getUserRooms">
+<code class="sig-name descname">getUserRooms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.getUserRooms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a set of the IDs (not objects) of the rooms that the user is in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>user</strong> (<a class="reference internal" href="user.html#psclient.User" title="psclient.User"><em>User</em></a>) – the user</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>set or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.login">
+<code class="sig-name descname">login</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">challstr</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs into Pokemon Showdown</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>challstr</strong> (<em>string</em>) – the challstr to use to log in</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.onClose">
+<code class="sig-name descname">onClose</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.onClose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs when the connection closes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.onError">
+<code class="sig-name descname">onError</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">error</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.onError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles errors on the websocket</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>{string? probably}</strong> (<em>error</em>) – the error</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.onMessage">
+<code class="sig-name descname">onMessage</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rawMessage</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.onMessage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles new messages from the websocket, creating a <a class="reference internal" href="message.html#psclient.Message" title="psclient.Message"><code class="xref any py py-class docutils literal notranslate"><span class="pre">Message</span></code></a> object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>rawMessage</strong> (<em>string</em>) – the raw message data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.onOpen">
+<code class="sig-name descname">onOpen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.onOpen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs when the websocket is opened</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.sayIn">
+<code class="sig-name descname">sayIn</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">room</span></em>, <em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.sayIn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a message to a room.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>room</strong> (<a class="reference internal" href="room.html#psclient.Room" title="psclient.Room"><em>Room</em></a>) – the room to send the message to</p></li>
+<li><p><strong>message</strong> (<em>string</em>) – the message to send</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.send">
+<code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a message</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>message</strong> (<em>string</em>) – the message to send</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.userJoinedRoom">
+<code class="sig-name descname">userJoinedRoom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">room</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.userJoinedRoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a user joining a room</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<a class="reference internal" href="user.html#psclient.User" title="psclient.User"><em>User</em></a>) – the user who joined</p></li>
+<li><p><strong>room</strong> (<a class="reference internal" href="room.html#psclient.Room" title="psclient.Room"><em>Room</em></a>) – the room they joined</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.userLeftRoom">
+<code class="sig-name descname">userLeftRoom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">room</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.userLeftRoom" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a user leaving a room</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> (<a class="reference internal" href="user.html#psclient.User" title="psclient.User"><em>User</em></a>) – the user who joined</p></li>
+<li><p><strong>room</strong> (<a class="reference internal" href="room.html#psclient.Room" title="psclient.Room"><em>Room</em></a>) – the room they joined</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="psclient.PSConnection.whisper">
+<code class="sig-name descname">whisper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">userid</span></em>, <em class="sig-param"><span class="n">message</span></em><span class="sig-paren">)</span><a class="headerlink" href="#psclient.PSConnection.whisper" title="Permalink to this definition">¶</a></dt>
+<dd><p>PMs a message to a user</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>userid</strong> (<em>string in ID format</em>) – the user to PM</p></li>
+<li><p><strong>message</strong> (<em>string</em>) – the message to PM</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="room.html" class="btn btn-neutral float-right" title="Room class" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="client.html" class="btn btn-neutral float-left" title="PSClient class" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright  2019-2020, Annika
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
