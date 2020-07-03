@@ -1,18 +1,21 @@
-.. PS! client documentation master file, created by
-   sphinx-quickstart on Thu Jul  2 17:24:48 2020.
+.. psclient documentation master file, created by
+   sphinx-quickstart on Thu Jul  2 18:50:33 2020.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Documentation for ps-client!
-======================================
+Welcome to psclient's documentation!
+====================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
-   source/psclient
-   source/modules
+   psclient
 
 
+Indices and tables
+==================
+
+* :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`

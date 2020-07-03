@@ -1,6 +1,4 @@
-"""chatlog.py
-    a sample chatlogger included with ps-client
-    by Annika"""
+"""a sample chatlogger included with ps-client"""
 
 import pathlib
 from datetime import datetime
@@ -11,14 +9,15 @@ import psclient
 
 class Chatlogger:
     """Class for logging chat
+        Args:
+            path (string): the path to the logging directory
     """
     def __init__(self, path):
         """Creates a new Chatlogger
 
-        Args:
-            path (string): the path to the logging directory
         """
         self.path = pathlib.Path(path)
+        """the path to log chat to"""
         if not self.path.exists(): self.path.mkdir()
         if not self.path.is_dir(): psclient.log(f"E: Chatlogger(): logging directory is a file: {str(self.path.resolve())}")
 
@@ -83,8 +82,8 @@ class Chatlogger:
         return results
 
     def formatMessage(self, message):
-        """Formats a message for logging.
-        Format: userid|time|type|senderName|body
+        """Formats a message for logging in the data format userid|time|type|senderName|body
+
         Args:
             message (Message): the message to format
 
