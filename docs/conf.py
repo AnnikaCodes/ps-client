@@ -75,3 +75,4 @@ todo_include_todos = True
 napoleon_google_docstring = True
 napoleon_use_param = True
 napoleon_use_ivar = True
+master_doc = 'index'
