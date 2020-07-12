@@ -218,7 +218,7 @@ class Message():
             html (string): the html to be sent
         """
         if self.room and self.connection.this.can("html", self.room):
-            return self.room.say(f"/adduhtml {self.connection.this.userid},{html}")
+            return self.room.say(f"/adduhtml {self.connection.this.id},{html}")
         if self.sender and not self.room:
             possibleRoomIDs = [r for r in self.connection.getUserRooms(self.sender) \
                 if r in self.connection.getUserRooms(self.connection.this)]
