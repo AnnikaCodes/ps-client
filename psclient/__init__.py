@@ -87,7 +87,7 @@ class Room():
     def join(self):
         """Joins the room
         """
-        self.connection.send(f'|/j {self.id}')
+        self.connection.send(f'|/join {self.id}')
         self.connection.roomList.add(self)
         self.say(f'/cmd roominfo {self.id}')
 
@@ -492,7 +492,7 @@ class PSConnection():
             room (Room): the room to send the message to
             message (string): the message to send
         """
-        self.websocket.send(f"{room}|{message}")
+        self.send(f"{room}|{message}")
 
     def whisper(self, userid, message):
         """PMs a message to a user
@@ -501,7 +501,7 @@ class PSConnection():
             userid (string in ID format): the user to PM
             message (string): the message to PM
         """
-        self.websocket.send(f"|/pm {userid}, {message}")
+        self.send(f"|/pm {userid}, {message}")
 
     def onError(self, error):
         """Handles errors on the websocket

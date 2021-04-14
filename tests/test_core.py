@@ -8,8 +8,8 @@ import sys
 import pathlib
 sys.path.append(str(pathlib.Path('.').resolve()))
 
-import psclient # pylint: disable=wrong-import-position
 from dummies import DummyConnection # pylint: disable=wrong-import-position
+import psclient # pylint: disable=wrong-import-position
 
 def testToID():
     """Tests the toID() function
