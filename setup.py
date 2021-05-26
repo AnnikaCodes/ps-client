@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ps-client",
-    version="0.0.7",
+    version="0.0.8",
     author="Annika",
     author_email="annika0uwu@gmail.com",
     description="A package for interactions with the Pokémon Showdown simulator.",
