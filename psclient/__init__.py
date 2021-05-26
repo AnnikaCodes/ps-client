@@ -369,10 +369,10 @@ class PSConnection():
         """Creates a new PSConnection object"""
         self.websocket = websocket.WebSocketApp(
             url,
-            on_message=self.onMessage,
-            on_open=self.onOpen,
-            on_error=self.onError,
-            on_close=self.onClose
+            on_message=lambda x, y: self.onMessage(y),
+            on_open=lambda x: self.onOpen(),
+            on_error=lambda x, y: self.onError(y),
+            on_close=lambda x: self.onClose()
         )
         self.roomList = set()
         self.userList = {}
