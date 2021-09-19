@@ -8,7 +8,7 @@
 
 # Logs, etc.
 logs/*
-tests/logs
+psclient/tests/logs
 
 # Build
 build/

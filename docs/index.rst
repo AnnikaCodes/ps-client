@@ -10,12 +10,12 @@ Documentation for ps-client
    :caption: Contents:
 
 
-   client
    connection
    room
    user
    message
    chatlog
+   tests
 
 
 Indices and tables

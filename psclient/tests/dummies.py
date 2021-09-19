@@ -4,18 +4,23 @@
 import psclient
 
 # pylint: disable=super-init-not-called
-
-class DummyConnection(psclient.PSConnection):
-    """A modified version of PSConnection to be used for offline testing
+class DummyWebsocket:
+    """Dummy websocket class
     """
-    def __init__(self):
-        super().__init__('', '')
+    def __init__(self, host):
+        self.host = host
+
+class DummyConnection(psclient.Connection):
+    """A modified version of Connection tom be used for offline testing
+    """
+    def __init__(self, loglevel=1):
+        super().__init__('', '', DummyWebsocket('example.com'), {}, loglevel)
         self.roomList = {
             psclient.Room("testroom", self), psclient.Room("testroom2", self),
             psclient.Room("testroom3", self), psclient.Room("lobby", self)
         }
 
-    def send(self, message):
+    async def send(self, message):
         """The send() method is disabled in DummyConnection
         """
 
@@ -47,7 +52,7 @@ class DummyMessage(psclient.Message):
         """
         self.response = response
 
-    def respondHTML(self, html):
+    async def respondHTML(self, html):
         """Captures the HTML response to a message
 
         Args:

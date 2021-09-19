@@ -4,22 +4,20 @@
 
 from datetime import datetime
 import re
-import sys
 import pathlib
-import dummies
-sys.path.append(str(pathlib.Path(__file__).joinpath("../..").resolve()) + '/')
+from psclient import chatlog
+from . import dummies
 
-from psclient import chatlog # pylint: disable=wrong-import-position
 
 class TestChatlog:
     """Tests for the chatlog module
     """
-    chatlogger = chatlog.Chatlogger('tests/logs/')
+    chatlogger = chatlog.Chatlogger('psclient/tests/logs/')
 
     def testChatlogger(self):
         """Tests the basic chatlogger functions
         """
-        assert str(self.chatlogger.path.resolve().relative_to(pathlib.Path('.').resolve())) == 'tests/logs'
+        assert str(self.chatlogger.path.resolve().relative_to(pathlib.Path('.').resolve())) == 'psclient/tests/logs'
         today = datetime.now().date()
         assert str(pathlib.Path(self.chatlogger.getFile("testroom", "a").name).resolve()).split('/')[-1] == f"{today}.txt"
 

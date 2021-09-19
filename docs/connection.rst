@@ -1,9 +1,9 @@
-PSConnection class
+Connection class
 ----------------------
 
 .. currentmodule:: psclient
-.. autoclass:: PSConnection
+.. autoclass:: Connection
    :members:
    :undoc-members:
    :show-inheritance:
-
+.. autofunction:: connect

@@ -3,13 +3,8 @@
     by Annika"""
 
 # pylint: disable=line-too-long
-
-import sys
-import pathlib
-sys.path.append(str(pathlib.Path('.').resolve()))
-
-from dummies import DummyConnection # pylint: disable=wrong-import-position
-import psclient # pylint: disable=wrong-import-position
+import psclient
+from .dummies import DummyConnection
 
 def testToID():
     """Tests the toID() function
@@ -21,42 +16,42 @@ def testToID():
 def testLog(capsys):
     """Tests the log() function
     """
-    psclient.LOGLEVEL = 0
-    psclient.log("E: this shows")
-    psclient.log("W: this doesn't show")
-    psclient.log("I: this doesn't show")
-    psclient.log("DEBUG: this doesn't show")
-    psclient.log("this doesn't show")
+    conn = DummyConnection(0)
+    conn.log("E: this shows")
+    conn.log("W: this doesn't show")
+    conn.log("I: this doesn't show")
+    conn.log("DEBUG: this doesn't show")
+    conn.log("this doesn't show")
     capture = capsys.readouterr()
     assert capture.out == ""
     assert capture.err == "E: this shows\n"
 
-    psclient.LOGLEVEL = 1
-    psclient.log("E: this shows")
-    psclient.log("W: this shows")
-    psclient.log("I: this doesn't show")
-    psclient.log("DEBUG: this doesn't show")
-    psclient.log("this doesn't show")
+    conn = DummyConnection(1)
+    conn.log("E: this shows")
+    conn.log("W: this shows")
+    conn.log("I: this doesn't show")
+    conn.log("DEBUG: this doesn't show")
+    conn.log("this doesn't show")
     capture = capsys.readouterr()
     assert capture.out == ""
     assert capture.err == "E: this shows\nW: this shows\n"
 
-    psclient.LOGLEVEL = 2
-    psclient.log("E: this shows")
-    psclient.log("W: this shows")
-    psclient.log("I: this shows")
-    psclient.log("DEBUG: this doesn't show")
-    psclient.log("this doesn't show")
+    conn = DummyConnection(2)
+    conn.log("E: this shows")
+    conn.log("W: this shows")
+    conn.log("I: this shows")
+    conn.log("DEBUG: this doesn't show")
+    conn.log("this doesn't show")
     capture = capsys.readouterr()
     assert capture.out == "I: this shows\n"
     assert capture.err == "E: this shows\nW: this shows\n"
 
-    psclient.LOGLEVEL = 3
-    psclient.log("E: this shows")
-    psclient.log("W: this shows")
-    psclient.log("I: this shows")
-    psclient.log("DEBUG: this shows")
-    psclient.log("this shows")
+    conn = DummyConnection(3)
+    conn.log("E: this shows")
+    conn.log("W: this shows")
+    conn.log("I: this shows")
+    conn.log("DEBUG: this shows")
+    conn.log("this shows")
     capture = capsys.readouterr()
     assert capture.out == "I: this shows\nDEBUG: this shows\nthis shows\n"
     assert capture.err == "E: this shows\nW: this shows\n"
@@ -243,16 +238,13 @@ def testUser():
     assert user.id == "testuseroo"
 
     room.auth = {}
-    assert not user.can("html", room)
-    assert not user.can("wall", room)
+    assert not user.canUseHTML(room)
 
     room.auth = {'%': {'testuseroo'}}
-    assert not user.can("html", room)
-    assert user.can("wall", room)
+    assert not user.canUseHTML(room)
 
     room.auth = {'*': {'testuseroo'}}
-    assert user.can("html", room)
-    assert user.can("wall", room)
+    assert user.canUseHTML(room)
 
     assert isinstance(str(user), str)
 
